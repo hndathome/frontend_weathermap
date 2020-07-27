@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style>
-        .container {
-            /* background-image: url('images/kelly-sikkema-4JxV3Gs42Ks-unsplash.jpg'); */
-            background-position: center;
+        #forecastBackground {
+            background-size: cover;
+            height: 675px;
         }
 
         h1 {
@@ -22,7 +22,7 @@
 
 
 <body>
-    <div class="container">
+    <div class="container" id="forecastBackground">
         <form>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-md-8 offset-md-2">
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="forecast-background" style="padding: 10px;">
+                    <div id="forecastCondition" style="padding: 10px;">
                         <div class="row">
                             <div class="col-6">
                                 <h4 id="temperature"></h4>
@@ -86,7 +86,7 @@
                         getWeather(zipCode.value);
                     }
                     else {
-
+                        alert('Invalid Zip Code.');
                     }
                 }
 
@@ -148,15 +148,28 @@
 
                                 let conditionDesc = document.getElementById("conditionDesc");
                                 conditionDesc.innerHTML = `${forecast.weather[0].description}`;
+
+                                let forecastBackground = document.getElementById("forecastBackground");
+
+                                forecastBackground.style.backgroundImage = `url('images/${forecast.weather[0].icon}.jpg')`;
+
+                                let iconValue = forecast.weather[0].icon;
+                                let forecastCondition = document.getElementById("forecastCondition");
+
+                                if (String(iconValue).endsWith("d")) {
+                                    forecastCondition.style.color = "black";
+                                }
+                                else {
+                                    forecastCondition.style.color = "white";
+                                }
                             }
                             else {
-                                alert('There was an error');
+                                alert('There was an error.');
                             }
                         }
                     };
                     request.open("GET", "http://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + ",US&units=imperial&appid=ccef2c8c8034982955bec1e0b2a83e36", true);
                     request.send();
-
                 }
             </script>
         </form>
