@@ -56,13 +56,13 @@
                     <div id="forecast-background" style="padding: 10px;">
                         <div class="row">
                             <div class="col-6">
-                                <h4><i class="fa fa-lg  fa-thermometer-3" title="temperature" id="temperature"></i></h4>
+                                <h4 id="temperature"></h4>
                                 <p id="feelsLike"></p>
                             </div>
                             <div class="col-6" style="margin-top: -10px;">
                                 <h4 id="condition">
                                 </h4>
-                                <p id="conditionDesc"></p>
+                                <p id="conditionDesc" style="margin-top: -12px;"></p>
                             </div>
                         </div>
                     </div>
@@ -111,8 +111,34 @@
                                 let displayDateTime = document.getElementById("dateTime");
                                 displayDateTime.innerHTML = dateTime;
 
+
+                                let currentTemp = parseFloat(forecast.main.temp);
                                 let temperature = document.getElementById("temperature");
-                                temperature.innerHTML = ` ${forecast.main.temp} <span>&#8457;</span>`;
+                                let thermometerClass = "";
+                                let thermometerColor = "";
+
+                                if (currentTemp > 84) {
+                                    thermometerClass = "fa-thermometer-4";
+                                    thermometerColor = "#F94144";
+                                }
+                                else if (currentTemp > 54) {
+                                    thermometerClass = "fa-thermometer-3";
+                                    thermometerColor = "#F29E4C"
+                                }
+                                else if (currentTemp > 34) {
+                                    thermometerClass = "fa-thermometer-2";
+                                    thermometerColor = "#16DB93"
+                                }
+                                else if (currentTemp > 0) {
+                                    thermometerClass = "fa-thermometer-1";
+                                    thermometerColor = "#00B4D8"
+                                }
+                                else {
+                                    thermometerClass = "fa-thermometer-0";
+                                    thermometerColor = "#023E8A"
+                                }
+
+                                temperature.innerHTML = `<i class="fa fa-lg ${thermometerClass}" style="color: ${thermometerColor}" title="temperature"></i> ${forecast.main.temp} <span>&#8457;</span>`;
 
                                 let feelsLike = document.getElementById("feelsLike");
                                 feelsLike.innerHTML = `Feels like: ${forecast.main.feels_like}<span>&#176;</span><br />Hi ${forecast.main.temp_max}<span>&#176;</span> | Lo ${forecast.main.temp_min}<span>&#176;</span>`;
