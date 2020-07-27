@@ -159,7 +159,7 @@
                                 let iconValue = forecast.weather[0].icon;
                                 let forecastCondition = document.getElementById("forecastCondition");
 
-                                if (String(iconValue).endsWith("d")) {
+                                if (String(iconValue).endsWith("d") && iconValue != "04d") {
                                     forecastCondition.style.color = "black";
                                 }
                                 else {
