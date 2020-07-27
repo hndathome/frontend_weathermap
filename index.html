@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .container {
+            /* background-image: url('images/kelly-sikkema-4JxV3Gs42Ks-unsplash.jpg'); */
+            background-position: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <form>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-8 offset-md-2">
+                    <div style="height: 175px; background-color: #95B8D1; padding: 10px;">
+                        <h1>Weather App</h1>
+                        <div class="row">
+                            <diV class="col-md-2">
+                            </diV>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <input type="text" minlength="5" maxlength="5" class="form-control" id="zipCode"
+                                        placeholder="Search Zip Code">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-primary" onclick="submitZipCode();"
+                                    title="Submit">Submit</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <diV class="col-md-2">
+                            </diV>
+                            <div class="col-md-5">
+                                <h6 id="location"><i class="fa fa-lg fa-location-arrow" title="location"></i></h6>
+                            </div>
+                            <div class="col-md-5">
+                                <h6 id="dateTime"></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="forecast-background" style="padding: 10px;">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4><i class="fa fa-lg  fa-thermometer-3" title="temperature" id="temperature"></i></h4>
+                                <p id="feelsLike"></p>
+                            </div>
+                            <div class="col-6" style="margin-top: -10px;">
+                                <h4 id="condition">
+                                </h4>
+                                <p id="conditionDesc"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+            <script>
+                getWeather(72701);
+
+                function submitZipCode() {
+                    let zipCode = document.getElementById("zipCode");
+                    if (zipCode.value && (/^\d{5}$/.test(zipCode.value))) {
+                        getWeather(zipCode.value);
+                    }
+                    else {
+
+                    }
+                }
+
+                function getWeather(zipCode) {
+                    let request = new XMLHttpRequest();
+                    request.onreadystatechange = function () {
+                        if (request.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
+                            if (request.status == 200) {
+                                let forecast = JSON.parse(request.responseText);
+                                console.log(forecast);
+                                let conditions = forecast.name + " is currently " + forecast.weather[0].main + ", and " + + " degrees.";
+
+
+                                let today = new Date();
+                                let date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+                                let time = today.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric' });
+                                let dateTime = `${date} ${time}`;
+
+                                let location = document.querySelector(".fa-location-arrow");
+                                location.innerHTML = ` ${forecast.name}, ${forecast.sys.country}`;
+
+                                let displayDateTime = document.getElementById("dateTime");
+                                displayDateTime.innerHTML = dateTime;
+
+                                let temperature = document.getElementById("temperature");
+                                temperature.innerHTML = ` ${forecast.main.temp} <span>&#8457;</span>`;
+
+                                let feelsLike = document.getElementById("feelsLike");
+                                feelsLike.innerHTML = `Feels like: ${forecast.main.feels_like}<span>&#176;</span><br />Hi ${forecast.main.temp_max}<span>&#176;</span> | Lo ${forecast.main.temp_min}<span>&#176;</span>`;
+
+                                let condition = document.getElementById("condition");
+                                condition.innerHTML = `<img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" width="50px" height="50px" alt="${forecast.weather[0].description} image"> ${forecast.weather[0].main}`;
+
+                                let conditionDesc = document.getElementById("conditionDesc");
+                                conditionDesc.innerHTML = `${forecast.weather[0].description}`;
+                            }
+                            else {
+                                alert('There was an error');
+                            }
+                        }
+                    };
+                    request.open("GET", "http://api.openweathermap.org/data/2.5/weather?zip=" + zipCode + ",US&units=imperial&appid=ccef2c8c8034982955bec1e0b2a83e36", true);
+                    request.send();
+
+                }
+            </script>
+        </form>
+</body>
+
+</html>
