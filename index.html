@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0" />
     <title>Weather App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -11,44 +11,42 @@
     <style>
         #forecastBackground {
             background-size: cover;
-            height: 675px;
+            background-repeat: no-repeat;
         }
 
         h1 {
             text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .row {
+            margin-left: 0px;
         }
     </style>
 </head>
 
 
-<body>
-    <div class="container" id="forecastBackground">
+<body id="forecastBackground">
+    <div class="container">
         <form onsubmit="return submitHandler()">
-            <div class="row" style="margin-top: 20px;">
+            <div class="row" style="margin-top: 16px;">
                 <div class="col-md-8 offset-md-2">
-                    <div style="height: 175px; background-color: #95B8D1; padding: 10px;">
+                    <div style="height: 175px; background-color: #95B8D1;">
                         <h1>Weather App</h1>
-                        <div class="row">
-                            <diV class="col-md-2">
-                            </diV>
-                            <div class="col-8">
-                                <div class="form-group">
-                                    <input type="text" minlength="5" maxlength="5" class="form-control" id="zipCode"
-                                        placeholder="Search Zip Code">
-                                </div>
-                            </div>
-                            <div class="col-2">
+                        <div class="form-group row">
+                            <div class="col-6">
+                                <input type="text" minlength="5" maxlength="5" class="form-control" id="zipCode"
+                                    placeholder="Search Zip Code" title="Search Zip Code"> </div>
+                            <div class="col-6">
                                 <button type="button" class="btn btn-primary" onclick="submitZipCode();"
                                     title="Submit">Submit</button>
                             </div>
                         </div>
                         <div class="row">
-                            <diV class="col-md-2">
-                            </diV>
-                            <div class="col-md-5">
+                            <div class="col-xs-12 col-md-6">
                                 <h6 id="location"><i class="fa fa-lg fa-location-arrow" title="location"></i></h6>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-xs-12 col-md-6">
                                 <h6 id="dateTime"></h6>
                             </div>
                         </div>
