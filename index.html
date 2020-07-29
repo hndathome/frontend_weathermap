@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0" />
-    <title>Weather App</title>
+    <title>WeatherCheck</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -23,6 +23,13 @@
 
         .row {
             margin-left: 0px;
+            margin-right: 0px;
+        }
+
+        .btn-outline-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
         }
     </style>
 </head>
@@ -33,15 +40,20 @@
         <form onsubmit="return submitHandler()">
             <div class="row" style="margin-top: 16px;">
                 <div class="col-md-8 offset-md-2">
-                    <div style="height: 175px; background-color: #95B8D1;">
-                        <h1>Weather App</h1>
-                        <div class="form-group row">
-                            <div class="col-6">
-                                <input type="text" minlength="5" maxlength="5" class="form-control" id="zipCode"
-                                    placeholder="Search Zip Code" title="Search Zip Code"> </div>
-                            <div class="col-6">
-                                <button type="button" class="btn btn-primary" onclick="submitZipCode();"
-                                    title="Submit">Submit</button>
+                    <div style="height: 175px; background-color: #95B8D1;border-radius: 4px;">
+                        <h1>Weather<i class="fa fa-check" aria-hidden="true"></i>
+                        </h1>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Search Zip Code"
+                                        aria-label="Search Zip code" minlength="5" maxlength="5"
+                                        aria-describedby="basic-addon1" id="zipCode">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary" title="Submit" type="button"
+                                            onclick="submitZipCode();">Submit</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -55,7 +67,7 @@
                     </div>
                     <div id="forecastCondition" style="padding: 10px;">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6" style="padding-right: 0px;">
                                 <h4 id="temperature"></h4>
                                 <p id="feelsLike"></p>
                             </div>
